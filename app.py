@@ -15,6 +15,20 @@ s3 = boto3.client('s3',
 
 BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
 
+@app.route('/')
+def home():
+    return "Flask server is running!"
+
+@app.route('/files', methods=['GET'])
+def list_files(): 
+    try: 
+        objects = s3.list_objects(Bucket=BUCKET_NAME)
+        files_list = [obj['Key'] for obj in objects('Contents', [])]
+        
+        return jsonify({"files": files_list}), 200
+    except Exception as e: 
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/upload', methods=['POST'])
 def upload_image():
     if 'image' not in request.files:
