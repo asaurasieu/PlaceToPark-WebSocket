@@ -28,13 +28,14 @@ def upload_image():
     file.save(file_path)
     
     # Upload the file to S3
-    s3.upload_file(file_path, BUCKET_NAME, file.filename)
-    
-    os.remove(file_path)
-    
-    return jsonify({"sucess": True, "messsage": f"File {file.filename} uploaded successfully to S3 bucket"}), 200
+    try: 
+        s3.upload_file(file_path, BUCKET_NAME, file.filename)
+        os.remove(file_path)
+        return jsonify({"sucess": True, "messsage": f"File {file.filename} uploaded successfully to S3 bucket"}), 200
+    except Exception as e: 
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__': 
-    if not os.path.exists('/temp'):
-        os.makedirs('/temp')
-    app.run(debug=True, port=5000)
+    if not os.path.exists('temp'):
+        os.makedirs('temp')
+    app.run(debug=True, host='0.0.0.0' port=5000)
