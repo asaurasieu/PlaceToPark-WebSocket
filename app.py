@@ -22,8 +22,8 @@ def home():
 @app.route('/files', methods=['GET'])
 def list_files(): 
     try: 
-        objects = s3.list_objects(Bucket=BUCKET_NAME)
-        files_list = [obj['Key'] for obj in objects('Contents', [])]
+        objects = s3.list_objects_v2(Bucket=BUCKET_NAME)
+        files_list = [obj['Key'] for obj in objects.get('Contents', [])]
         
         return jsonify({"files": files_list}), 200
     except Exception as e: 
@@ -46,12 +46,12 @@ def upload_image():
         s3.upload_file(file_path, BUCKET_NAME, file.filename)
         os.remove(file_path)
         print(f"File {file.filename} uploaded to S3 bucket successfully") 
-        return jsonify({"sucess": True, "messsage": f"File {file.filename} uploaded successfully to S3 bucket"}), 200
+        return jsonify({"success": True, "message": f"File {file.filename} uploaded successfully to S3 bucket"}), 200
     except Exception as e: 
         print(f"Error uploading file {file.filename} to S3: {e}") 
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__': 
-    if not os.path.exists('temp'):
-        os.makedirs('temp')
+    if not os.path.exists('/temp'):
+        os.makedirs('/temp')
     app.run(debug=True, host='0.0.0.0', port=5000)
