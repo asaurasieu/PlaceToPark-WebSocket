@@ -54,7 +54,6 @@ try:
         frames = glob.glob(f"{output_dir}/*.jpg")
         for frame in frames: 
             upload_frame_to_server(frame)
-            time.sleep(1) 
             os.remove(frame)
         time.sleep(1)
 except KeyboardInterrupt: 
