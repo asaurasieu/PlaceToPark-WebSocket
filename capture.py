@@ -28,6 +28,7 @@ def upload_frame_to_server(frame_path):
     try:
         with open(frame_path, 'rb') as f:
             files = {'image': f}
+            print(f"Files dictionary for upload: {files}") 
             response = requests.post(flask_server_url, files=files)
             if response.status_code == 200:
                 print(f"Successfully uploaded {frame_path}")
