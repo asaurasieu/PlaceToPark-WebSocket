@@ -42,8 +42,8 @@ def upload_image():
     file_path = os.path.join('/temp', file.filename)
     file.save(file_path)
     
-    if not os.path.exists('/temp'):
-        os.makedirs('/temp')
+    if not os.path.exists('temp'):
+        os.makedirs('temp')
         
     try:
         file.save(file_path)
@@ -64,6 +64,6 @@ def upload_image():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__': 
-    if not os.path.exists('/temp'):
-        os.makedirs('/temp')
+    if not os.path.exists('temp'):
+        os.makedirs('temp')
     app.run(debug=True, host='0.0.0.0', port=5000)
