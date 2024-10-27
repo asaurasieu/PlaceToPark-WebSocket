@@ -14,7 +14,7 @@ output_dir = "frames"
 os.makedirs(output_dir, exist_ok=True)
 
 # URL of the Flask server to which we'll upload the frames
-flask_server_url = "http://51.20.10.64:5000/upload"
+flask_server_url = "http://13.60.137.225:5000/upload"
 
 ffmpeg_command = f'ffmpeg -i "{stream_url}" -vf "fps=1/5" {output_dir}/frame_%04d.jpg'
 
