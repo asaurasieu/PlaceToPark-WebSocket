@@ -45,8 +45,10 @@ def upload_image():
     try: 
         s3.upload_file(file_path, BUCKET_NAME, file.filename)
         os.remove(file_path)
+        print(f"File {file.filename} uploaded to S3 bucket successfully") 
         return jsonify({"sucess": True, "messsage": f"File {file.filename} uploaded successfully to S3 bucket"}), 200
     except Exception as e: 
+        print(f"Error uploading file {file.filename} to S3: {e}") 
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__': 
