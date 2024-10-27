@@ -37,7 +37,7 @@ def upload_frame_to_server(frame_path):
     except Exception as e:
         print(f"Error uploading {frame_path}: {str(e)}")
 
-def quit_process():
+def quit_process(signum, frame):
     print("Exiting...")
     if process:
         process.terminate()

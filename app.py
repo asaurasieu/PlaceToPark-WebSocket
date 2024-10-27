@@ -54,6 +54,7 @@ def upload_image():
     
     # Upload the file to S3
     try: 
+        print(f"Attempting to upload {file_path} to S3...")
         s3.upload_file(file_path, BUCKET_NAME, file.filename)
         os.remove(file_path)
         print(f"File {file.filename} uploaded to S3 bucket successfully") 
