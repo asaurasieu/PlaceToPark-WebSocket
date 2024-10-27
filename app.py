@@ -1,16 +1,19 @@
 from flask  import Flask, request, jsonify
 import boto3 
 import os 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
 #AWS S3 bucket 
 s3 = boto3.client('s3', 
-                  aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-                  aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], 
-                  region_name=os.environ['AWS_REGION'])
+                  aws_access_key_id=os.getenv['AWS_ACCESS_KEY_ID'],
+                  aws_secret_access_key=os.getenv['AWS_SECRET_ACCESS_KEY'], 
+                  region_name=os.getenv['AWS_REGION'])
 
-BUCKET_NAME = os.environ['AWS_BUCKET_NAME']
+BUCKET_NAME = os.getenv['AWS_BUCKET_NAME']
 
 @app.route('/upload', methods=['POST'])
 def upload_image():
