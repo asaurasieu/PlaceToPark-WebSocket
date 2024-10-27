@@ -13,7 +13,7 @@ s3 = boto3.client('s3',
                   aws_secret_access_key=os.getenv['AWS_SECRET_ACCESS_KEY'], 
                   region_name=os.getenv['AWS_REGION'])
 
-BUCKET_NAME = os.getenv['AWS_BUCKET_NAME']
+BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
 
 @app.route('/upload', methods=['POST'])
 def upload_image():
