@@ -24,6 +24,7 @@ def capture_frames():
     return process
 
 def upload_frame_to_server(frame_path):
+    print(f"Attempting to upload: {frame_path}")
     try:
         with open(frame_path, 'rb') as f:
             files = {'image': f}

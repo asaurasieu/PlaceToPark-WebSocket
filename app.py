@@ -36,7 +36,7 @@ def upload_image():
     
     file = request.files['image']
     if file.filename == '':
-        return jsonify({'error', 'No selected file'}), 400
+        return jsonify({'error': 'No selected file'}), 400
     
     file_path = os.path.join('/temp', file.filename)
     file.save(file_path)
