@@ -27,6 +27,7 @@ def list_files():
         
         return jsonify({"files": files_list}), 200
     except Exception as e: 
+        print(f"Error listing files: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/upload', methods=['POST'])
@@ -40,6 +41,16 @@ def upload_image():
     
     file_path = os.path.join('/temp', file.filename)
     file.save(file_path)
+    
+    if not os.path.exists('/temp'):
+        os.makedirs('/temp')
+        
+    try:
+        file.save(file_path)
+        print(f"File saved to {file_path}")  
+    except Exception as e:
+        print(f"Error saving file: {str(e)}")
+        return jsonify({"error": f"Error saving file: {str(e)}"}), 500   
     
     # Upload the file to S3
     try: 
