@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Live Stream Control Interface </title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1> Control the live stream capture </h1>
+    <form id="streamForm">
+        <label for="streamURL">Live Stream URL:</label>
+        <input type="url" id="streamURL" name="streamURL" required>
+        <button type="button" onclick="startCapture()">RUN</button>
+        <button type="button" onclick="stopCapture()">STOP</button>
+    </form>
+
+    <script>
+        async function startCapture() {
+            const streamURL = document.getElementById('streamURL').value;
+            if (!streamURL) {
+                alert('Please enter a valid stream URL');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://<EC2-Elastic-IP>:5000/start_capture', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ stream_url: streamURL })
+                });
+                const result = await response.json();
+                alert(result.message || "Error starting the capture");
+            } catch (error) {
+                console.log("Error st arting the capture", error);
+            }
+        }
+
+        async function stopCapture() {
+            try {
+                const response = await fetch('http://<EC2-Elastic-IP>:5000/stop_capture', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+                const result = await response.json();
+                alert(result.message || "Error stopping the capture");
+            } catch (error) {
+                console.log("Error stopping the capture", error);
+            }
+        }
+    </script>
+</body>
+
+</html>

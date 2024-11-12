@@ -8,7 +8,7 @@ import time
 
 
 # URL of the live stream from VLC
-stream_url = "https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1730084565/ei/daoeZ5LzDbycp-oP3YeHoQs/ip/81.35.177.6/id/EPKWu223XEg.4/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/qtApAQLb8L1xZO-d3CPpPZtasFpneEgTagm8brWLvpmgPsWHalDwECpUdY7MURg/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/fexp/51312688%2C51326932/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRQIgRmhmEn2l-JiuYcdn7OLxDDSFf7AZUhRdFJu-LZ5I37ACIQDnT09dyCRtiuuUlLCoYPmQ3Pf6zWRnXefjtylD7Fz5MA%3D%3D/file/index.m3u8"
+stream_url = "https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1730764346/ei/2gkpZ7nMELDQp-oPpbqYgAc/ip/81.34.9.6/id/EPKWu223XEg.4/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51324841/txs/51324841%2C51324842%2C51324843/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/qtApASXFN4zluZQyh3IIWdua_jMbKGxD7EkQwO65wlJVqaZlmKrPY5pPEQ/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/fexp/51312688%2C51326932%2C51331020%2C51338153/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRAIgbubrs6XTDdROOk5PTqgdNUmEiVbly-DvX_wBMuNUKG8CIA0pJdJE4ISk0PrVoop_q6zVno-NUD7eLfr69mi6qctw/file/index.m3u8"
 
 output_dir = "frames"
 os.makedirs(output_dir, exist_ok=True)
