@@ -17,7 +17,7 @@ detection_stats = {
 
 
 print("Loading YOLOv8 model...")
-model = YOLO('runs/detect/parking_detection_model/weights/best.pt')
+model = YOLO('/Users/anita/Desktop/Test/runs/detect/car_detection_model4/weights/best.pt')
 print("Model loaded successfully.")
 
 
