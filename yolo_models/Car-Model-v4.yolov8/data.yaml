@@ -1,0 +1,13 @@
+train: /Users/anita/Desktop/Test/Car-Model-v4.yolov8/train/images
+val: /Users/anita/Desktop/Test/Car-Model-v4.yolov8/valid/images
+test: /Users/anita/Desktop/Test/Car-Model-v4.yolov8/test/images
+
+nc: 2
+names: ["available", "occupied"]
+
+roboflow:
+  workspace: demo-2zyvl
+  project: car-model-4va6l
+  version: 4
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/demo-2zyvl/car-model-4va6l/dataset/4
