@@ -6,12 +6,12 @@ import sys
 output_dir = "frames"
 os.makedirs(output_dir, exist_ok=True)
 
-youtube_url = "https://www.youtube.com/live/EPKWu223XEg?si=js_LWhj38TicLhQY"
+youtube_url = "https://www.youtube.com/watch?v=EPKWu223XEg"
 
 
 command = (
     f'yt-dlp -f best -o - "{youtube_url}" '
-    f'| ffmpeg -loglevel verbose -i pipe:0 -vf "fps=1/7" {output_dir}/frame_%04d.jpg'
+    f'| ffmpeg -loglevel verbose -i pipe:0 -vf "fps=1/7" -pix_fmt rgb24 {output_dir}/frame_%04d.jpg'
 )
 
 process = None

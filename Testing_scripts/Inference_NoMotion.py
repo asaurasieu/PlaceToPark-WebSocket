@@ -23,7 +23,7 @@ print(f"Using device: {device}")
 model = models.resnet18(pretrained=False)
 num_features = model.fc.in_features
 model.fc = torch.nn.Linear(num_features, 2)  
-model.load_state_dict(torch.load("model_version6.pth", map_location=device))
+model.load_state_dict(torch.load("/Users/anita/Documents/ParkingProjectFlask/Final_models/model_version6.pth", map_location=device))
 model.to(device)
 model.eval()
 print("Model loaded successfully.")
@@ -35,7 +35,7 @@ transform = transforms.Compose([
 ])
 
 print("Loading parking spots data...")
-with open("grayscale_mask/parking_spots.json", "r") as f:
+with open("/Users/anita/Documents/ParkingProjectFlask/grayscale_mask/parking_spots.json", "r") as f:
     parking_spots = json.load(f)
 print(f"Loaded {len(parking_spots)} parking spots.")
 
@@ -48,7 +48,7 @@ print("Starting monitoring for new frames...")
 
 
 while True:
-    current_files = set(glob.glob("frames/*.jpg"))
+    current_files = set(glob.glob("/Users/anita/Documents/ParkingProjectFlask/Server_side/frames/*.jpg"))
     new_files = current_files - processed_files
     
     for file_path in sorted(new_files):

@@ -24,7 +24,7 @@ def draw_rectangle(event, x, y,frames, params):
         cv2.imshow('Annotate Parking Spots', image)
 
 
-image_path = 'edges_grayscale.jpg'
+image_path = 'frame_0003.jpg'
 image = cv2.imread(image_path)
 if image is None:
     print("Could not load image:", image_path)

@@ -17,7 +17,7 @@ detection_stats = {
     "detection_rates": []
 }
 
-# Store previous frame and features for optical flow
+
 prev_frame = None
 prev_features = None
 prev_occupied_status = {}
@@ -29,7 +29,7 @@ print(f"Using device: {device}")
 model = models.resnet18(pretrained=False)
 num_features = model.fc.in_features
 model.fc = torch.nn.Linear(num_features, 2)  
-model.load_state_dict(torch.load("model_version6.pth", map_location=device))
+model.load_state_dict(torch.load("/Users/anita/Documents/ParkingProjectFlask/Final_models/model_version6.pth", map_location=device))
 model.to(device)
 model.eval()
 print("Model loaded successfully.")
@@ -41,7 +41,7 @@ transform = transforms.Compose([
 ])
 
 print("Loading parking spots data...")
-with open("grayscale_mask/parking_spots.json", "r") as f:
+with open("/Users/anita/Documents/ParkingProjectFlask/grayscale_mask/parking_spots.json", "r") as f:
     parking_spots = json.load(f)
 print(f"Loaded {len(parking_spots)} parking spots.")
 
@@ -50,14 +50,12 @@ detection_stats_dir = "detection_stats"
 os.makedirs(annotations_dir, exist_ok=True)
 os.makedirs(detection_stats_dir, exist_ok=True)
 
-# Parameters for optical flow
 lk_params = dict(
     winSize=(15, 15),
     maxLevel=2,
     criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03)
 )
 
-# Parameters for feature detection
 feature_params = dict(
     maxCorners=100,
     qualityLevel=0.3,
@@ -65,7 +63,6 @@ feature_params = dict(
     blockSize=7
 )
 
-# Function to initialize tracking points for each parking spot
 def initialize_tracking_points(frame, parking_spots):
     tracking_points = {}
     frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -80,7 +77,6 @@ def initialize_tracking_points(frame, parking_spots):
         spot_xmax = max(start[0], end[0])
         spot_ymax = max(start[1], end[1])
         
-        # A mask for the parking spot
         spot_mask = np.zeros_like(frame_gray)
         spot_mask[int(spot_ymin):int(spot_ymax), int(spot_xmin):int(spot_xmax)] = 255
         
@@ -95,7 +91,7 @@ def initialize_tracking_points(frame, parking_spots):
             tracking_points[spot_id] = spot_features
         else:
             points = []
-            step = 5
+            step = 10
             for y in range(int(spot_ymin), int(spot_ymax), step):
                 for x in range(int(spot_xmin), int(spot_xmax), step):
                     points.append([[float(x), float(y)]])
@@ -111,7 +107,6 @@ def detect_movement(prev_gray, curr_gray, tracking_points):
             movement_scores[spot_id] = 0
             continue
             
-        # Calculate optical flow
         new_points, status, error = cv2.calcOpticalFlowPyrLK(
             prev_gray, curr_gray, points, None, **lk_params
         )
@@ -139,7 +134,7 @@ def detect_movement(prev_gray, curr_gray, tracking_points):
 print("Starting monitoring for new frames...")
 
 while True:
-    current_files = set(glob.glob("frames/*.jpg"))
+    current_files = set(glob.glob("/Users/anita/Documents/ParkingProjectFlask/Server_side/frames/*.jpg"))
     new_files = current_files - processed_files
     
     for file_path in sorted(new_files):
@@ -148,23 +143,18 @@ while True:
             print(f"Failed to read {file_path}")
             continue
         
-        #  Grayscale for optical flow
         curr_gray = cv2.cvtColor(full_image, cv2.COLOR_BGR2GRAY)
         
-        # Initialize tracking points on first frame
         if prev_frame is None:
             prev_gray, tracking_points = initialize_tracking_points(full_image, parking_spots)
             prev_frame = full_image.copy()
             movement_scores = {spot_id: 0 for spot_id in tracking_points.keys()}
         else:
-            # Detect movement using optical flow
             movement_scores, tracking_points = detect_movement(prev_gray, curr_gray, tracking_points)
             prev_gray = curr_gray.copy()
         
-        # Convert to RGB for model input
         full_image_rgb = cv2.cvtColor(full_image, cv2.COLOR_BGR2RGB)
         
-        # Process each parking spot
         occupied_status = {}
         occupied_spots = 0
         
@@ -179,37 +169,25 @@ while True:
             spot_xmax = max(start[0], end[0])
             spot_ymax = max(start[1], end[1])
             
-            # Extract spot image
             spot_image = full_image_rgb[int(spot_ymin):int(spot_ymax), int(spot_xmin):int(spot_xmax)]
             
-            # Convert to PIL Image
             pil_image = Image.fromarray(spot_image)
             
-            # Prepare input tensor
             input_tensor = transform(pil_image).unsqueeze(0).to(device)
-            
-            # Get model prediction
+
             with torch.no_grad():
                 output = model(input_tensor)
                 _, prediction = torch.max(output, 1)
                 is_occupied = bool(prediction.item())
             
-            # Use movement information to refine prediction
-            # If we detect significant movement, it's likely the spot status is changing
             movement_score = movement_scores.get(spot_id, 0)
             movement_threshold = 1.0  
             
-            # If this spot had a prediction in the previous frame
             if spot_id in prev_occupied_status:
-                # If there's significant movement, trust the current model prediction
                 if movement_score > movement_threshold:
-                    # Keep the current prediction
                     pass
                 else:
-                    # If no significant movement, use temporal smoothing
-                    # This makes the prediction more stable by considering history
                     confidence = output.softmax(1)[0]
-                    # Only if the confidence is low, use the previous prediction
                     if max(confidence) < 0.7:
                         is_occupied = prev_occupied_status[spot_id]
             
@@ -217,13 +195,10 @@ while True:
             if is_occupied:
                 occupied_spots += 1
         
-        # Store current predictions for the next frame
         prev_occupied_status = occupied_status.copy()
         
-        # Calculate detection rate
         detection_rate = occupied_spots / total_spots * 100
         
-        # Draw annotations
         for spot in parking_spots:
             spot_id = spot.get("id", f"Spot_{len(occupied_status)}")
             
@@ -255,15 +230,12 @@ while True:
                     x, y = point.ravel()
                     cv2.circle(full_image, (int(x), int(y)), 3, (255, 0, 0), -1)
         
-        # Save annotated image
         annotated_filename = os.path.join(annotations_dir, f"annotated_resnet_flow_{os.path.basename(file_path)}")
         cv2.imwrite(annotated_filename, full_image)
         
-        # Display the frame
         cv2.imshow("Parking Spots - ResNet with Optical Flow", full_image)
         cv2.waitKey(1)
-        
-        # Save detection stats
+    
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output = {
             "timestamp": timestamp,
