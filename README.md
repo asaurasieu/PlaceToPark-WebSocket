@@ -93,7 +93,4 @@ The WebSocket server provides:
 The models were trained using data from the `Datasets/` directory. Training configurations and processes are documented in the `training_folder/` directory.
 
 ## License
-
-[Add your license information here]
-
 For questions or contributions, please open an issue or submit a pull request.
