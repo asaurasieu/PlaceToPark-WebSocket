@@ -152,7 +152,7 @@ async def stream_capture():
             await asyncio.sleep(5)
 
 async def main():
-    host = "127.0.0.1"  # Explicitly use localhost
+    host = "127.0.0.1" 
     port = 3000
     
     print(f"Starting WebSocket server on {host}:{port}")
