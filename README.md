@@ -1,6 +1,6 @@
 # Parking Project
 
-A real-time parking space detection system powered by AI. The system processes video feeds to identify available parking spaces, making it easier to find parking in busy areas.
+On street, real time parking space detection system powered by AI. The system processes live video feeds to identify available parking spaces. 
 
 ## Project Overview
 
