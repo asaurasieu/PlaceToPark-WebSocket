@@ -1,6 +1,6 @@
 # Parking Project
 
-A real-time parking space detection system powered by AI. The system processes video feeds to identify available parking spaces, making it easier to find parking in busy areas.
+On street, real time parking space detection system powered by AI. The system processes live video feeds to identify available parking spaces. 
 
 ## Project Overview
 
@@ -92,8 +92,3 @@ The WebSocket server provides:
 
 The models were trained using data from the `Datasets/` directory. Training configurations and processes are documented in the `training_folder/` directory.
 
-## License
-
-[Add your license information here]
-
-For questions or contributions, please open an issue or submit a pull request.
