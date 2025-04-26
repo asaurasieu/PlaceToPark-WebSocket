@@ -1,94 +1,53 @@
-# Parking Project
+## Project Structure
 
-On street, real time parking space detection system powered by AI. The system processes live video feeds to identify available parking spaces. 
-
-## Project Overview
-
-The project is structured into several key components:
+The repository is organized into the following main directories:
 
 ### Core Components
 
-- **Server_side/**: The main server implementation with WebSocket connections
-  - `server_react.py`: Primary server handling real-time communication
-  - `server_in_web.py`: Alternative server implementation
-  - `frames/`: Storage for processed video frames
-  - `AWS_app.py`: AWS cloud integration
-- **Final_models/**: Production-ready models, featuring the optimized ResNet18 implementation
-- **Datasets/**: Training and validation data for model development
-- **resnet_models/**: Various iterations of the ResNet model
-- **Yolo_models/**: Initial YOLO implementation (superseded by ResNet18)
+- **Server_side/**: Contains the server implementation
+  - `HerokuServer.py`: Main server application for handling video processing and WebSocket connections
+  - `capture3.py`: Video capture and processing module
+  - `frames/`: Directory for storing processed video frames
+
+### Model Components
+
+- **Final_models/**: Contains the production-ready model
+  - `model_version6.pth`: The trained ResNet18 model weights
+
+### Development and Training
+
+- **training_folder/**: Contains model training scripts and configurations
+- **resnet_models/**: Development versions of the ResNet model
+- **Yolo_models/**: Previous YOLO-based implementations
+- **Datasets/**: Training and validation data
+- **Evaluation/**: Model evaluation metrics and results
+- **Model_results/**: Performance analysis and results
 
 ### Supporting Components
 
-- **templates/**: Web interface templates
 - **Additional_scripts/**: Utility scripts and helper functions
-- **grayscale_mask/**: Image processing and mask generation tools
-- **Model_results/**: Model evaluation metrics and results
-- **training_folder/**: Model training configurations and scripts
+- **grayscale_mask/**: Image processing tools for mask generation
 
 ## Technology Stack
 
-The project leverages modern tools and frameworks:
-
-- Custom Python WebSocket server for real-time processing
-- WebSocket protocol for live communication
-- PyTorch and TorchVision for deep learning implementation
-- OpenCV for computer vision tasks
-- Pillow for image processing
-- yt-dlp for video stream handling
+- Python
+- PyTorch and TorchVision for deep learning
+- OpenCV for computer vision
+- WebSocket for real-time communication
 - Flask for web framework
-- Jinja2 for template rendering
-- NumPy for scientific computing
-- Requests for HTTP communication
+- Heroku for deployment
 
-## Development Journey
+## Model Information
 
-The system evolved through several iterations:
+The system uses a ResNet18-based model trained on parking space detection. The model processes video frames in real-time to identify available parking spaces.
 
-1. **Initial Version**: YOLO-based detection system
-2. **Current Version**: ResNet18-based classification
-   - Enhanced accuracy and performance
-   - Optimized for real-time processing
-   - Improved resource efficiency
+## Deployment
 
-## Setup Guide
+The application is configured for deployment on Heroku, with the necessary configuration in the `Procfile`.
+Heroku is a cloud platform that enables developers to build, run, and operate applications entirely in the cloud.
 
-To get started with the project:
+## Development Notes
 
-1. Set up the environment:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-
-2. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Launch the server:
-
-```bash
-cd Server_side
-python server_react.py
-```
-
-4. Visualization Options:
-   - **React App**: Access the real-time visualization through the React application
-   - **Website Template**: Alternatively, use the HTML template by running `server_in_web.py`
-
-## System Architecture
-
-The WebSocket server provides:
-
-- Real-time video stream processing
-- Live parking space status updates
-- Client-server communication
-- Frame-by-frame parking space analysis
-
-## Model Training
-
-The models were trained using data from the `Datasets/` directory. Training configurations and processes are documented in the `training_folder/` directory.
-
+- The project has evolved from an initial YOLO-based implementation to the current ResNet18-based solution
+- The current model (version6) provides improved accuracy and real-time performance
+- The server implementation supports WebSocket connections for real-time updates
