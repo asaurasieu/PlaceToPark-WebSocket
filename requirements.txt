@@ -1,6 +1,6 @@
 opencv-python==4.8.1.78
 numpy==1.26.3
-torch==2.1.2
+torch
 torchvision==0.16.2
 Pillow==10.2.0
 python-dotenv==1.0.0
