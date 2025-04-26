@@ -1,9 +1,11 @@
-opencv-python==4.8.1.78
-numpy==1.26.3
-torch >=2.2.0
-torchvision==0.21.0
-Pillow==10.2.0
-python-dotenv==1.0.0
+aiohttp==3.9.1
 websockets==12.0
-yt-dlp==2023.12.30
+google-cloud-storage==2.14.0
+torch==2.1.0
+torchvision==0.16.0
+opencv-python==4.8.1.78
+yt-dlp==2023.11.16
+python-dotenv==1.0.0
+Pillow==10.1.0
+numpy==1.26.2
 
