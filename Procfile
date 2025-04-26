@@ -1,1 +1,1 @@
-web: python Server_side/server_react.py
+web: python Server_side/HerokuServer.py
