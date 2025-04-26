@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 HOST = os.getenv("HOST", "0.0.0.0")
 PORT = int(os.getenv("PORT", "8080"))
 
-MODEL_PATH = os.getenv("MODEL_PATH", "Final_models/model_version6.pth")
+MODEL_PATH = os.getenv("MODEL_PATH", "Final_model/model_version6.pth")
 PARKING_CONFIG = os.getenv("PARKING_SPOTS_CONFIG", "grayscale_mask/parking_spots.json")
 TOTAL_SPOTS = int(os.getenv("TOTAL_SPOTS", 24))
 CONF_THRESH = float(os.getenv("CONFIDENCE_THRESHOLD", 0.80))
