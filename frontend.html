@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Parking Spot Status</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+      .status {
+        margin-bottom: 20px;
+      }
+      .spot-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .spot {
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+      }
+      .available {
+        background: #4caf50;
+      }
+      .occupied {
+        background: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Parking Spot Status</h1>
+    <div class="status">
+      <span id="available">Available: 0</span> |
+      <span id="occupied">Occupied: 0</span>
+    </div>
+    <div class="spot-list" id="spotList"></div>
+
+    <script>
+      // Change the WebSocket URL as needed
+      const ws = new WebSocket("ws://localhost:8080");
+
+      ws.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        // Try to support both backend message formats
+        const available =
+          data.available ??
+          (data.total_spots && data.occupied_spots !== undefined
+            ? data.total_spots - data.occupied_spots
+            : 0);
+        const total = data.total ?? data.total_spots ?? 0;
+        const spots = data.spots;
+        document.getElementById(
+          "available"
+        ).textContent = `Available: ${available}`;
+        document.getElementById("occupied").textContent = `Occupied: ${
+          total - available
+        }`;
+        const spotList = document.getElementById("spotList");
+        spotList.innerHTML = "";
+        if (Array.isArray(spots)) {
+          spots.forEach((spot) => {
+            const div = document.createElement("div");
+            // Support both 'occupied' and 'isAvailable' keys
+            const isAvailable =
+              spot.isAvailable !== undefined
+                ? spot.isAvailable
+                : !spot.occupied;
+            div.className = "spot " + (isAvailable ? "available" : "occupied");
+            div.textContent = `Spot ${spot.id}`;
+            spotList.appendChild(div);
+          });
+        }
+      };
+
+      ws.onopen = function () {
+        console.log("WebSocket connected");
+      };
+      ws.onerror = function (e) {
+        console.error("WebSocket error", e);
+      };
+      ws.onclose = function () {
+        console.log("WebSocket closed");
+      };
+    </script>
+  </body>
+</html>
