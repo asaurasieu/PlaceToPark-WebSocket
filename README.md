@@ -5,13 +5,13 @@ The repository is organized into the following main directories:
 ### Core Components
 
 - **Server_side/**: Contains the server implementation
-  - `HerokuServer.py`: Main server application for handling video processing and WebSocket connections
+  - `Server.py`: Main server application for handling video processing and WebSocket connections
   - `capture3.py`: Video capture and processing module
   - `frames/`: Directory for storing processed video frames
 
 ### Model Components
 
-- **Final_models/**: Contains the production-ready model
+- **Final_model/**: Contains the production-ready model
   - `model_version6.pth`: The trained ResNet18 model weights
 
 ### Development and Training
@@ -35,7 +35,6 @@ The repository is organized into the following main directories:
 - OpenCV for computer vision
 - WebSocket for real-time communication
 - Flask for web framework
-- Heroku for deployment
 
 ## Model Information
 
@@ -43,8 +42,7 @@ The system uses a ResNet18-based model trained on parking space detection. The m
 
 ## Deployment
 
-The application is configured for deployment on Heroku, with the necessary configuration in the `Procfile`.
-Heroku is a cloud platform that enables developers to build, run, and operate applications entirely in the cloud.
+The application can be started using the `start-server.sh` script, which sets up the necessary environment and runs the server.
 
 ## Development Notes
 
