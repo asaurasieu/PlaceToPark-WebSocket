@@ -62,7 +62,7 @@ ema_values = {spot["id"]: 0.0 for spot in parking_spots}
 def smooth_occupancy(spot_id, new_value): 
     previous_value = ema_values[spot_id]
     was_occupied = previous_value > EMA_THRESHOLD
-    ema_values[spot_id] = EMA_ALPHA * new_value + (1 - EMA_ALPHA) * previous_value
+    ema_values[spot_id] = EMA_ALPHA * previous_value + (1 - EMA_ALPHA) * new_value
     threshold = EMA_LOW_THRESHOLD if was_occupied else EMA_HIGH_THRESHOLD 
     return ema_values[spot_id] > threshold
 
