@@ -34,7 +34,6 @@ The repository is organized into the following main directories:
 - PyTorch and TorchVision for deep learning
 - OpenCV for computer vision
 - WebSocket for real-time communication
-- Flask for web framework
 
 ## Model Information
 
